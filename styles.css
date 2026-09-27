@@ -121,6 +121,11 @@ article p{
     background:var(--color-accent);
     color:#191919;
 }
+.figure-credit{
+    padding:.5rem;
+    font-size:var(--size-data);
+    color:var(--color-text-data);
+}
 main{
     display:grid;
     gap:var(--space-lg);
@@ -176,6 +181,17 @@ img{
     grid-column:1/-1;
     padding:1rem;
     background:#f1f1f1;
+}
+@media (min-width:40rem){
+    .figure-credit{
+        position:absolute;
+        inset-block-end:1rem;
+        inset-inline-start:1rem;
+        z-index:var(--layer-overlay);
+        border-radius:var(--radius-sm);
+        background:var(--color-surface);
+        color:var(--color-text-dark);
+    }
 }
 @media (min-width:52rem){
     main{
