@@ -45,15 +45,256 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Example only</td>
-                        <td>Replace</td>
-                        <td>Replace</td>
-                        <td>Replace</td>
-                        <td>Replace</td>
-                        <td>Replace</td>
-                        <td>Replace</td>
+                        <td>Figure credit</td>
+                        <td>Says who made the image and under what licence.</td>
+                        <td>Sits under the image as a normal paragraph.</td>
+                        <td>Absolutely positioned at the bottom left of the image, 40rem and up. Keeps the credit on the image instead of taking up a line.</td>
+                        <td>Containing block is the media wrapper around the image. Sits at --layer-overlay, 30.</td>
+                        <td>Under 40rem it drops back to normal flow between the image and the caption.</td>
+                        <td>320, 768, 1280. Pointer and stacking.</td>
+                    </tr>
+                    <tr>
+                        <td>Story guide</td>
+                        <td>Jump links to the four sections.</td>
+                        <td>A normal block at the top of the page.</td>
+                        <td>Sticky with a 1rem offset, 52rem and up. Stays visible while you scroll.</td>
+                        <td>Containing block is its grid area in main. The viewport does the scrolling. Sits at --layer-sticky, 20. align-self:start keeps it from stretching. A stretched item kills sticky.</td>
+                        <td>Not sticky under 52rem.</td>
+                        <td>Sticky at page and section ends. 200% zoom, keyboard focus, pointer.</td>
+                    </tr>
+                    <tr>
+                        <td>Pull quote</td>
+                        <td>Pulls a quote out of the body text.</td>
+                        <td>Full-measure blockquote in normal flow.</td>
+                        <td>Shifted -2rem at the inline start, 52rem and up. Breaks out of the text column.</td>
+                        <td>Containing block is the section. Sits at --layer-raised, 10.</td>
+                        <td>Under 52rem it sits inline. The shift matches the grid gap. It stops at the guide's edge.</td>
+                        <td>320, 768, 1280. Content growth and stacking.</td>
+                    </tr>
+                    <tr>
+                        <td>Hero clip</td>
+                        <td>Opening image for the first section.</td>
+                        <td>Plain full rectangle.</td>
+                        <td>Polygon clip with one diagonal. Nothing important sits in the cut area.</td>
+                        <td>No containing block role. The clip makes its own stacking context. No z-index needed.</td>
+                        <td>No clip-path support means the full rectangle shows.</td>
+                        <td>Turn off clip-path. 320, 768, 1280. Check stacking.</td>
+                    </tr>
+                    <tr>
+                        <td>Portrait wrap</td>
+                        <td>Image for the tools section.</td>
+                        <td>Block image above the text.</td>
+                        <td>Floats inline-start, 52rem and up. Text wraps to a circle that matches the rounded edge.</td>
+                        <td>The section contains the float. It uses display:flow-root.</td>
+                        <td>No shape support means text wraps to the box. No float under 52rem.</td>
+                        <td>Turn off shape-outside. 320, 768, 1280. Content growth.</td>
+                    </tr>
+                    <tr>
+                        <td>Paw accent</td>
+                        <td>Decoration. Empty alt keeps it out of the accessibility tree.</td>
+                        <td>None. The page works without it.</td>
+                        <td>Absolutely positioned bottom right of the guide, with pointer-events:none. Sits over the Sources link. That is where pointer safety gets tested.</td>
+                        <td>Containing block is the guide. Accent at --layer-base, 0. The links stay in normal flow.</td>
+                        <td>None needed.</td>
+                        <td>Pointer, keyboard focus, stacking.</td>
                     </tr>
                 </tbody>
             </table>
+
+            <h2>Layer scale</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Value</th>
+                        <th>Used by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--layer-base</td>
+                        <td>0</td>
+                        <td>Paw accent</td>
+                    </tr>
+                    <tr>
+                        <td>--layer-raised</td>
+                        <td>10</td>
+                        <td>Pull quote</td>
+                    </tr>
+                    <tr>
+                        <td>--layer-sticky</td>
+                        <td>20</td>
+                        <td>Story guide</td>
+                    </tr>
+                    <tr>
+                        <td>--layer-overlay</td>
+                        <td>30</td>
+                        <td>Figure credit</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Support and fallback record</h2>
+            <p>References checked 26 September 2026.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>MDN reference</th>
+                        <th>Support</th>
+                        <th>Fallback on this page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>position:sticky</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position">CSS position</a></td>
+                        <td>Baseline in current browsers.</td>
+                        <td>Falls back to static. The guide sits in normal flow.</td>
+                    </tr>
+                    <tr>
+                        <td>clip-path</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path">CSS clip-path</a></td>
+                        <td>Baseline for basic shapes like polygon.</td>
+                        <td>Gated by a support test. Without it the image stays a full rectangle.</td>
+                    </tr>
+                    <tr>
+                        <td>shape-outside</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/shape-outside">CSS shape-outside</a></td>
+                        <td>Baseline in current browsers.</td>
+                        <td>Gated by a support test. From 52rem up the float stays. Text wraps to the box.</td>
+                    </tr>
+                    <tr>
+                        <td>shape-margin</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/shape-margin">CSS shape-margin</a></td>
+                        <td>Comes with shape-outside and shares its support.</td>
+                        <td>Text meets the circle with no gap.</td>
+                    </tr>
+                    <tr>
+                        <td>@supports</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@supports">CSS @supports</a></td>
+                        <td>Baseline in current browsers.</td>
+                        <td>A browser that cannot read the at-rule skips the block. The enhanced styles do not apply.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Test record</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test</th>
+                        <th>How</th>
+                        <th>Result</th>
+                        <th>Screenshot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTML validation</td>
+                        <td>Run index.html and composition-plan.html through the W3C Nu validator.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>CSS validation</td>
+                        <td>Run styles.css through the W3C CSS validator.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>CSS off</td>
+                        <td>Comment out the stylesheet link. Read the page top to bottom.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Viewports</td>
+                        <td>Check 320, 768 and 1280 in device mode.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>200% zoom and focus</td>
+                        <td>Zoom to 200%. Tab through every link.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Content growth</td>
+                        <td>Double every paragraph. Swap in a much longer title.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Sticky bounds</td>
+                        <td>Scroll to the top and bottom of the grid. Watch the guide.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Pointer</td>
+                        <td>Click every link in the guide, including Sources under the paw.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Shapes off</td>
+                        <td>Turn off clip-path, then shape-outside.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                    <tr>
+                        <td>Stacking</td>
+                        <td>Inspect each layered element in DevTools. Compare against the layer scale.</td>
+                        <td>Not run</td>
+                        <td>Not added</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Asset credits</h2>
+            <table>
+                <thead>
+                    <tr>ß
+                        <th>Asset</th>
+                        <th>Source</th>
+                        <th>Author</th>
+                        <th>Licence</th>
+                        <th>Changes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>hero.svg</td>
+                        <td><a href="https://openclipart.org/detail/311186/finger-nail-polish">Finger Nail Polish</a></td>
+                        <td>j4p4n</td>
+                        <td>Openclipart, public domain, CC0</td>
+                        <td>Recolored to the Module 1 palette. Title and description added.</td>
+                    </tr>
+                    <tr>
+                        <td>portrait.svg</td>
+                        <td><a href="https://openclipart.org/detail/354850/puppy">Puppy</a></td>
+                        <td>AreYouPrepared</td>
+                        <td>Openclipart, public domain, CC0</td>
+                        <td>viewBox squared to match the circle wrap. Title and description added.</td>
+                    </tr>
+                    <tr>
+                        <td>paw-accent.svg</td>
+                        <td><a href="https://openclipart.org/detail/308497/paw-print-splatter">Paw Print Splatter</a></td>
+                        <td>GDJ</td>
+                        <td>Openclipart, public domain, CC0</td>
+                        <td>Recolored to gold. Title and description added.</td>
+                    </tr>
+                    <tr>
+                        <td>tomarik-serif and tomarik-introvert</td>
+                        <td><a href="https://use.typekit.net/msn8lcj.css">Adobe Fonts kit</a></td>
+                        <td>Adobe Fonts</td>
+                        <td>Licensed for web use under an Adobe subscription</td>
+                        <td>None. Loaded from the kit.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Story sources are listed in the article.</p>
         </body>
         </html>
