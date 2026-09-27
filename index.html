@@ -151,6 +151,18 @@
         <p>
           <a href="composition-plan.html">Composition plan, layer scale, support record, tests and credits</a>
         </p>
+        <h3>AI Disclosure</h3>
+        <p>
+          I used Claude to generate debugging hypotheses when the story guide was not staying pinned while I scrolled. It suggested that the guide was stretching to the full height of its grid row, which left it no room to stick, and that adding <code>align-self:start</code> would fix it. I verified the relevant claim using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position">MDN's CSS position reference</a> and tested it in Chrome 153 by scrolling to the top, middle, and end of the grid at 1280px, captured in sticky-top.png, sticky-pinned.png, and sticky-end.png. I retained the suggestion because the guide stayed pinned 1rem from the top while I scrolled and stopped at the bottom of the grid instead of overlapping the documentation section. I can explain the final implementation.
+        </p>
+        <br>
+        <p>
+          I used Claude to suggest shape coordinates for the hero clip and the portrait wrap. It suggested <code>polygon(0 0,100% 0,100% 90%,0 100%)</code> to cut a single diagonal along the bottom of the hero image, and <code>circle(50%)</code> with a 1rem <code>shape-margin</code> so the text would follow the portrait's rounded edge. I verified the relevant claim using <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path">MDN's clip-path reference</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/shape-outside">MDN's shape-outside reference</a> and tested it in Chrome 153 at 320, 768, and 1280 with each property turned off, captured in fallback.png and figure.png. I retained the suggestion because nothing important sat in the cut area and the text wrapped to the circle, then fell back to the box when shapes were off. I can explain the final implementation.
+        </p>
+        <br>
+        <p>
+          I used Claude to check the grammar of the feature story in index.html and the writing in composition-plan.html. It suggested corrections to grammar, punctuation, and sentence structure. I verified the relevant claim using the <a href="https://apastyle.apa.org/style-grammar-guidelines/grammar">APA Style grammar guidelines</a> and tested each suggestion by comparing it to my original sentence to make sure the meaning and citations stayed the same. I retained most of the suggestions and changed some to better fit the message I was conveying. I can explain the final implementation.
+        </p>
       </section>
     </main>
   </body>
