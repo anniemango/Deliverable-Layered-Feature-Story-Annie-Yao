@@ -142,6 +142,7 @@ article section{
     scroll-margin-block-start:6rem;
 }
 .story-guide{
+    position:relative;
     display:flex;
     flex-direction:column;
     gap:var(--space-xs);
@@ -152,7 +153,18 @@ article section{
     background:var(--color-surface);
 }
 .story-guide a{
+    position:relative;
+    z-index:var(--layer-raised);
     padding:var(--space-sm);
+}
+.paw-accent{
+    position:absolute;
+    inset-block-end:0;
+    inset-inline-end:0;
+    z-index:var(--layer-base);
+    width:6rem;
+    opacity:.2;
+    pointer-events:none;
 }
 .feature-figure{
     position:relative;
@@ -205,8 +217,8 @@ img{
     .pull-quote{
         position:relative;
         z-index:var(--layer-raised);
-        margin-inline-start:-4rem;
-        background:var(--color-surface);;
+        margin-inline-start:-2rem;
+        background:var(--color-surface);
     }
     @supports (shape-outside:circle(50%)){
         .shape-portrait{
